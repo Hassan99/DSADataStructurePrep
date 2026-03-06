@@ -1,4 +1,4 @@
-package linkedlistds;
+package ds.linkedlistds;
 
 import java.util.Scanner;
 

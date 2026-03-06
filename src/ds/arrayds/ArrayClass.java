@@ -1,4 +1,4 @@
-package arrayds;
+package ds.arrayds;
 
 public class ArrayClass {
     int size;

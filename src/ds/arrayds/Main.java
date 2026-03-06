@@ -1,4 +1,4 @@
-package arrayds;
+package ds.arrayds;
 
 public class Main {
     public static void main(String[] args) {
