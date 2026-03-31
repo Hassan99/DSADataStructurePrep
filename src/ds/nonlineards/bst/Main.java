@@ -6,6 +6,8 @@ public class Main {
         bst.add(10);
         bst.add(5);
         bst.add(15);
+        bst.add(17);
+        bst.add(65);
         bst.add(12);
         bst.add(6);
         bst.add(1);
@@ -28,9 +30,12 @@ public class Main {
         bst.nodeAtKDistance(1).forEach(System.out::println);
         bst.levelOrderTraversal();
         bst.size();
-
-
-
+        bst.countLeafs();
+        bst.max();
+        System.out.println("Value is " + (bst.find(68) ? "Found" : "Not Found"));
+        System.out.println("Value are " + (bst.areSiblings(5, 15) ? "Siblings" : "Not Siblings"));
+        System.out.println("\nAncestors are:");
+        bst.getAncestors(6).forEach(System.out::println);
 
 
     }

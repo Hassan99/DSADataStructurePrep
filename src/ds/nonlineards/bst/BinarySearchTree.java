@@ -1,6 +1,7 @@
 package ds.nonlineards.bst;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BinarySearchTree {
     Node rootNode;
@@ -256,6 +257,111 @@ public class BinarySearchTree {
             return 0;
         }
         return 1 + size(node.left) + size(node.right);
+    }
+
+    public void countLeafs() {
+        System.out.println("Total Leaf nodes are: " + countLeafs(rootNode));
+    }
+
+    private int countLeafs(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.left == null && node.right == null) {
+            return 1;
+        }
+        return countLeafs(node.left) + countLeafs(node.right);
+    }
+
+    public void max() {
+        System.out.println("Maximum value in this tree is:" + max(rootNode));
+    }
+
+    private int max(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.right == null) {
+            return node.value;
+        }
+        return max(node.right);
+    }
+
+    public boolean find(int value) {
+        return find(rootNode, value);
+    }
+
+    private boolean find(Node node, int value) {
+        if (node == null) {
+            return false;
+        }
+        if (node.value > value) {
+            return find(node.left, value);
+        } else if (node.value < value) {
+            return find(node.right, value);
+        } else {
+            return true;
+        }
+    }
+
+    //Binary Tree version
+    public boolean contains(int value) {
+        return contains(rootNode, value);
+    }
+
+    private boolean contains(Node node, int value) {
+
+        if (node == null) {
+            return false;
+        }
+
+        if (node.value == value) {
+            return true;
+        }
+
+        return contains(node.left, value) || contains(node.right, value);
+    }
+
+    public boolean areSiblings(int first, int second) {
+        return areSiblings(rootNode, first, second);
+    }
+
+    private boolean areSiblings(Node node, int first, int second) {
+        if (node == null) {
+            return false;
+        }
+        if (node.left != null && node.right != null) {
+            if ((node.left.value == first && node.right.value == second) ||
+                    (node.left.value == second && node.right.value == first)) {
+                return true;
+            }
+        }
+
+        return areSiblings(node.left, first, second) || areSiblings(node.right, first, second);
+    }
+
+    public List<Integer> getAncestors(int value) {
+        List<Integer> listNodeOfAncestors = new ArrayList<>();
+        getAncestors(rootNode, value, listNodeOfAncestors);
+        return listNodeOfAncestors;
+    }
+
+    private boolean getAncestors(Node node, int value, List<Integer> list) {
+        if (node == null) {
+            return false;
+        }
+        if (node.value == value) {
+            return true;
+        }
+        if (getAncestors(node.left, value, list)) {
+            list.add(node.value);
+            return true;
+        }
+        if (getAncestors(node.right, value, list)) {
+            list.add(node.value);
+            return true;
+        }
+        return false;
     }
 
 }
