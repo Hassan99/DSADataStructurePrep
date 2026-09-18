@@ -1,9 +1,13 @@
 package ds.nonlineards.tries;
 
+import java.util.HashMap;
+
 public class Trie {
+
+
     class Node{
         private char value;
-        private Node[] node = new Node[26];
+        private HashMap<Character,Node> node = new HashMap<>();
         private boolean isEndOfNode = false;
 
         public Node(char value) {
@@ -18,13 +22,6 @@ public class Trie {
             this.value = value;
         }
 
-        public Node[] getNode() {
-            return node;
-        }
-
-        public void setNode(Node[] node) {
-            this.node = node;
-        }
 
         public boolean isEndOfNode() {
             return isEndOfNode;
@@ -33,19 +30,42 @@ public class Trie {
         public void setEndOfNode(boolean endOfNode) {
             isEndOfNode = endOfNode;
         }
+        public boolean hasChild(char ch){
+            return node.containsKey(ch);
+        }
+        public void addChild(char ch,Node node){
+            this.node.put(ch,node);
+        }
+        public Node getChild(char ch){
+            return this.node.get(ch);
+        }
     }
     private Node rootNode = new Node(' ');
+
+    public void addCharacter(char ch,Node node ){
+
+    }
 
     public void insertTrie(String word){
         Node current = rootNode;
         for(char ch:word.toCharArray()){
-            int index = ch-'a';
-            if(current.node[index]==null){
-                current.node[index] = new Node(ch);
+            if(!current.hasChild(ch)){
+                current.addChild(ch,new Node(ch));
             }
-            current = current.node[index];
+            current = current.getChild(ch);
         }
         current.isEndOfNode =true;
-
+    }
+    public boolean search(String word){
+        Node current = rootNode;
+        for(char ch:word.toCharArray()){
+            if(current.hasChild(ch)){
+                current = current.getChild(ch);
+            }
+            if(current.isEndOfNode()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
