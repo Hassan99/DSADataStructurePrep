@@ -62,10 +62,8 @@ public class Trie {
             if(current.hasChild(ch)){
                 current = current.getChild(ch);
             }
-            if(current.isEndOfNode()) {
-                return true;
-            }
+
         }
-        return false;
+       return  current.isEndOfNode();
     }
 }
