@@ -8,7 +8,7 @@ public class Main {
         trie.insertTrie("catering");
         System.out.println();
         System.out.println();
-        trie.removeWord("catr");
+        trie.removeWord("cat");
 
         System.out.println(trie.search("category"));
         System.out.println(trie.search("cat"));

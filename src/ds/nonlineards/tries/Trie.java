@@ -35,6 +35,10 @@ public class Trie {
             return node.containsKey(ch);
         }
 
+        public boolean hasChildren() {
+            return !node.isEmpty();
+        }
+
         public void addChild(char ch, Node node) {
             this.node.put(ch, node);
         }
@@ -103,49 +107,36 @@ public class Trie {
         return current.isEndOfNode();
     }
 
-    public void removeWord(String word) {
-        removeWord(rootNode, word, 0);
+    public boolean removeWord(String word) {
+        if(word==null||word.isEmpty())
+            return false;
+        return removeWord(rootNode, word, 0);
     }
 
-    private void removeWord(Node node, String word, int index) {
-        if(index == word.length()){
-            node.isEndOfNode = false;
-            return;
+    private boolean removeWord(Node node, String word, int index) {
+        if(index == word.length() ){
+            if(node.isEndOfNode) {
+                node.isEndOfNode = false;
+                return false;
+            }
+            System.out.println("This word is not exist..");
+            return !node.hasChildren();
         }
 
         char ch = word.charAt(index);
         Node child = node.getChild(ch);
         if(child==null){
-            return;
+            return false;
         }
-        removeWord(child, word, index + 1);
-        if(child.getAllChildren().length==0 && !child.isEndOfNode){
-            child.remove(ch);
+        boolean shouldDeleteChild = removeWord(child, word, index + 1);
+
+        if(shouldDeleteChild){
+            node.remove(ch);
+            return !node.hasChildren() && !node.isEndOfNode();
         }
+        return false;
     }
 
 
 
-   /* private void removeWord(Node node, String word) {
-        Node current = node;
-        for (char ch : word.toCharArray()) {
-            if (current.hasChild(ch)) {
-                current = current.getChild(ch);
-            }else{
-                System.out.println("Word not exist..");
-                return;
-            }
-        }
-        if (current.isEndOfNode()) {
-            current.setEndOfNode(false);
-            if(current.getAllChildren().length==0){
-
-            }
-        }else{
-            System.out.println("This word not found..");
-        }
-
-
-    }
-*/
 }
