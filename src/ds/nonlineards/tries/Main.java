@@ -6,13 +6,12 @@ public class Main {
         trie.insertTrie("category");
         trie.insertTrie("cat");
         trie.insertTrie("catering");
-        System.out.println();
-        System.out.println();
-        trie.removeWord("cat");
+        trie.insertTrie("car");
+        trie.insertTrie("cab");
+        trie.insertTrie("egg");
 
-        System.out.println(trie.search("category"));
-        System.out.println(trie.search("cat"));
-        System.out.println(trie.search("catering"));
+        System.out.println(trie.autoCompleteList(null));
+
 
     }
 }

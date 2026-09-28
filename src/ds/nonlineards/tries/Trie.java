@@ -1,6 +1,8 @@
 package ds.nonlineards.tries;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Trie {
 
@@ -108,14 +110,14 @@ public class Trie {
     }
 
     public boolean removeWord(String word) {
-        if(word==null||word.isEmpty())
+        if (word == null || word.isEmpty())
             return false;
         return removeWord(rootNode, word, 0);
     }
 
     private boolean removeWord(Node node, String word, int index) {
-        if(index == word.length() ){
-            if(node.isEndOfNode) {
+        if (index == word.length()) {
+            if (node.isEndOfNode) {
                 node.isEndOfNode = false;
                 return false;
             }
@@ -125,18 +127,54 @@ public class Trie {
 
         char ch = word.charAt(index);
         Node child = node.getChild(ch);
-        if(child==null){
+        if (child == null) {
             return false;
         }
         boolean shouldDeleteChild = removeWord(child, word, index + 1);
 
-        if(shouldDeleteChild){
+        if (shouldDeleteChild) {
             node.remove(ch);
             return !node.hasChildren() && !node.isEndOfNode();
         }
         return false;
     }
 
+    public List<String> autoCompleteList(String prefix) {
+
+        if (prefix == null) {
+            return null;
+        }
+        List<String> listOfWords = new ArrayList<>();
+        Node lastNodeOf = findLastNodeOf(prefix);
+
+        if (lastNodeOf == null) {
+
+        }else {
+            findWords(lastNodeOf, prefix, listOfWords);
+        }
+        return listOfWords;
+    }
+
+    private void findWords(Node node, String prefix, List<String> listOfWords) {
+        if (node.isEndOfNode) {
+            listOfWords.add(prefix);
+        }
+        for (Node ch : node.getAllChildren()) {
+            findWords(ch, prefix + ch.getValue(), listOfWords);
+        }
+    }
+
+    private Node findLastNodeOf(String prefix) {
+        Node current = rootNode;
+        for (char ch : prefix.toCharArray()) {
+            Node child = current.getChild(ch);
+            if (child == null) {
+                return null;
+            }
+            current = child;
+        }
+        return current;
+    }
 
 
 }
