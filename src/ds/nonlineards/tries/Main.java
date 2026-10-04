@@ -10,7 +10,7 @@ public class Main {
         trie.insertTrie("cab");
         trie.insertTrie("egg");
 
-        System.out.println(trie.autoCompleteList(null));
+        System.out.println(trie.searchRecursive("category"));
 
 
     }

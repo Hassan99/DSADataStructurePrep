@@ -109,6 +109,40 @@ public class Trie {
         return current.isEndOfNode();
     }
 
+    public boolean searchRecursive(String word) {
+
+
+        return searchRecursive(rootNode, word,0);
+
+    }
+
+
+    private boolean searchRecursive(Node node, String word,int index) {
+
+        if (word == null ) {
+            return false;
+        }
+        if (node == null) {
+            return false;
+        }
+        char ch = ' ';
+        if(index>=0) {
+            ch = word.charAt(index);
+        }
+
+        if(node.hasChild(ch) ) {
+            Node current = node.getChild(ch);
+
+            if (current.isEndOfNode && word.length() == (index+1)) {
+                return true;
+            }
+            index = index + 1;
+
+            return searchRecursive(current, word, index);
+        }
+        return false;
+    }
+
     public boolean removeWord(String word) {
         if (word == null || word.isEmpty())
             return false;
@@ -149,7 +183,7 @@ public class Trie {
 
         if (lastNodeOf == null) {
 
-        }else {
+        } else {
             findWords(lastNodeOf, prefix, listOfWords);
         }
         return listOfWords;
