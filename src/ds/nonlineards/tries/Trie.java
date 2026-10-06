@@ -110,15 +110,11 @@ public class Trie {
     }
 
     public boolean searchRecursive(String word) {
-
-
         return searchRecursive(rootNode, word,0);
-
     }
 
 
     private boolean searchRecursive(Node node, String word,int index) {
-
         if (word == null ) {
             return false;
         }
@@ -129,15 +125,12 @@ public class Trie {
         if(index>=0) {
             ch = word.charAt(index);
         }
-
         if(node.hasChild(ch) ) {
             Node current = node.getChild(ch);
-
             if (current.isEndOfNode && word.length() == (index+1)) {
                 return true;
             }
             index = index + 1;
-
             return searchRecursive(current, word, index);
         }
         return false;
@@ -210,5 +203,55 @@ public class Trie {
         return current;
     }
 
+
+    public int countWordsInTrie() {
+        int count = 0;
+        return countWordsInTrie(rootNode, count);
+    }
+
+    private int countWordsInTrie(Node node, int count) {
+        if (node.hasChildren()) {
+            for (Node current : node.getAllChildren()) {
+                if (current.isEndOfNode) {
+                    count = count + 1;
+                }
+                count = countWordsInTrie(current, count);
+            }
+        }
+        return count;
+    }
+    public String getLongestCommonPrefix(){
+        return longestCommonPrefix(rootNode);
+    }
+
+    private String longestCommonPrefix(Node node){
+
+        if(node.isEndOfNode){
+            return null;
+        }
+        if(node.getAllChildren().length==1){
+
+            return prepareString(node,"");
+        }
+        return null;
+    }
+
+    private String prepareString(Node node,String value){
+        if(node != null && node.hasChildren()) {
+            for (Node current : node.getAllChildren()) {
+                if (!current.isEndOfNode && current.getAllChildren().length == 1) {
+                    value = value + current.getValue();
+                    return prepareString(current, value);
+                } else if (!current.isEndOfNode && current.getAllChildren().length > 1) {
+                    value = value + current.getValue();
+                    return value;
+                } else if (node.isEndOfNode) {
+                    value = value + current.getValue();
+                    return value;
+                }
+            }
+        }
+        return value;
+    }
 
 }
